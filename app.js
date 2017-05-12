@@ -17,11 +17,10 @@ var commentRoutes       = require("./routes/comments"),
     campgroundRoutes    = require("./routes/parlors"),
     authRoutes          = require("./routes/index");
 
-console.log(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
 
 //seedDB(); // seed the database
-mongoose.connect(process.env.DATABASEURL);
-// mongoose.connect("mongodb://SaiGundlapalli:password@ds139761.mlab.com:39761/sai_yelp_camp");
+mongoose.connect(url);
 
 
 app.use(bodyParser.urlencoded({extended: true}));
