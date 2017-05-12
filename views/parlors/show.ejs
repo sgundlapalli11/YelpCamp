@@ -1,0 +1,56 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">IceKream</p>
+            <div class="list-group">
+                <li class="list-group-item">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= parlor.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">$9.00/hour</h4>
+                    <h4><a href=""><%= parlor.name %></a></h4>
+                    <p><%= parlor.description %></p>
+                    <p><em>Submitted by <%= parlor.author.username %></em></p>
+                    <% if(currentUser && parlor.author.id.equals(currentUser._id)) {%>
+                        <a class="btn btn-warning" href="/campground/<%= parlor._id %>/edit">Edit</a>
+                        <form class="deleteForm" action="/campground/<%= parlor._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/campground/<%= parlor._id %>/comments/new">Add New Comment</a>
+                </div>
+                <hr>
+                <% parlor.comments.forEach(function(comment) { %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <%= comment.author.username %>
+                            <span class="pull-right">10 days ago</span>
+                            <p><%= comment.text %></p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)) {%>
+                                <a class="btn btn-es btn-warning" 
+                                    href="/campground/<%= parlor._id %>/comments/<%= comment._id %>/edit">
+                                    Edit
+                                </a>
+                                <form class="deleteForm" action="/campground/<%= parlor._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
